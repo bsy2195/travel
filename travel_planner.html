@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 여행 플래너</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;700&family=DM+Serif+Display:ital@0;1&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root { --sand:#F5ECD7; --deep:#1A1209; --amber:#C17F24; --rust:#8B3A2A; --cream:#FAF5EC; --mist:#E8DFC8; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--cream); color:var(--deep); font-family:'Noto Sans KR',sans-serif; min-height:100vh; }
+.container { max-width:760px; margin:0 auto; padding:60px 24px; }
+.header { text-align:center; margin-bottom:56px; animation:fadeDown 0.8s ease both; }
+.header-badge { display:inline-block; font-size:11px; font-weight:500; letter-spacing:3px; color:var(--amber); border:1px solid var(--amber); padding:6px 16px; margin-bottom:24px; }
+.header h1 { font-family:'DM Serif Display',serif; font-size:clamp(42px,8vw,72px); line-height:1.1; color:var(--deep); margin-bottom:16px; }
+.header h1 em { font-style:italic; color:var(--amber); }
+.header p { font-size:15px; color:#6B5E4A; font-weight:300; line-height:1.7; }
+.form-card { background:white; border:1px solid var(--mist); padding:48px; box-shadow:0 4px 40px rgba(26,18,9,0.06); animation:fadeUp 0.8s 0.2s ease both; }
+.form-group { margin-bottom:32px; }
+.form-label { display:block; font-size:11px; font-weight:500; letter-spacing:2px; color:var(--amber); margin-bottom:12px; }
+.form-input { width:100%; padding:14px 18px; border:1px solid var(--mist); background:var(--cream); font-family:'Noto Sans KR',sans-serif; font-size:15px; color:var(--deep); outline:none; transition:border-color 0.2s,box-shadow 0.2s; }
+.form-input:focus { border-color:var(--amber); box-shadow:0 0 0 3px rgba(193,127,36,0.1); }
+.choice-group { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:10px; }
+.choice-btn { padding:12px 16px; border:1px solid var(--mist); background:var(--cream); font-family:'Noto Sans KR',sans-serif; font-size:13px; color:#6B5E4A; cursor:pointer; transition:all 0.2s; text-align:center; }
+.choice-btn:hover { border-color:var(--amber); color:var(--amber); }
+.choice-btn.selected { background:var(--amber); border-color:var(--amber); color:white; font-weight:500; }
+.submit-btn { width:100%; padding:18px; background:var(--deep); color:var(--sand); border:none; font-family:'Noto Sans KR',sans-serif; font-size:14px; font-weight:500; letter-spacing:2px; cursor:pointer; transition:background 0.3s; margin-top:8px; }
+.submit-btn:hover { background:var(--amber); }
+.loading { display:none; text-align:center; padding:60px 0; }
+.loading.show { display:block; }
+.loading-icon { font-size:48px; display:block; margin-bottom:20px; animation:spin 3s linear infinite; }
+.loading p { font-size:14px; color:#6B5E4A; }
+.loading-dots { display:inline-flex; gap:6px; margin-top:16px; }
+.loading-dots span { width:6px; height:6px; background:var(--amber); border-radius:50%; animation:bounce 1.2s infinite; }
+.loading-dots span:nth-child(2) { animation-delay:0.2s; }
+.loading-dots span:nth-child(3) { animation-delay:0.4s; }
+.result-card { display:none; background:white; border:1px solid var(--mist); padding:48px; box-shadow:0 4px 40px rgba(26,18,9,0.06); }
+.result-card.show { display:block; animation:fadeUp 0.6s ease both; }
+.result-header { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:32px; padding-bottom:24px; border-bottom:1px solid var(--mist); gap:16px; flex-wrap:wrap; }
+.result-title { font-family:'DM Serif Display',serif; font-size:28px; color:var(--deep); }
+.result-tags { display:flex; gap:8px; flex-wrap:wrap; }
+.result-tag { font-size:11px; padding:4px 10px; background:var(--cream); border:1px solid var(--mist); color:#6B5E4A; }
+.result-content { font-size:14px; line-height:1.9; color:#3A2E20; white-space:pre-wrap; font-family:'Noto Serif KR',serif; font-weight:300; }
+.reset-btn { display:inline-flex; align-items:center; gap:8px; margin-top:32px; padding:12px 24px; border:1px solid var(--deep); background:transparent; font-family:'Noto Sans KR',sans-serif; font-size:12px; letter-spacing:2px; color:var(--deep); cursor:pointer; transition:all 0.2s; }
+.reset-btn:hover { background:var(--deep); color:var(--sand); }
+.error-msg { display:none; background:#FFF5F5; border:1px solid #FFCDD2; padding:16px 20px; color:var(--rust); font-size:14px; margin-top:16px; }
+.error-msg.show { display:block; }
+.footer { text-align:center; margin-top:48px; font-size:12px; color:#A89880; }
+@keyframes fadeDown { from{opacity:0;transform:translateY(-20px)} to{opacity:1;transform:translateY(0)} }
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+@keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+@keyframes bounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-8px)} }
+@media(max-width:600px) { .form-card,.result-card{padding:28px 20px} .choice-group{grid-template-columns:1fr 1fr} }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div class="header-badge">✦ AI Travel Planner ✦</div>
+    <h1>나만의 <em>여행</em><br>일정 만들기</h1>
+    <p>여행지와 취향을 입력하면<br>AI가 최적의 2박 3일 일정을 만들어드립니다</p>
+  </div>
+
+  <div class="form-card" id="formCard">
+    <div class="form-group">
+      <label class="form-label">✈ 여행지</label>
+      <input type="text" class="form-input" id="destination" placeholder="예: 일본 후쿠오카, 제주도, 파리..." />
+    </div>
+    <div class="form-group">
+      <label class="form-label">👥 누구와 함께?</label>
+      <div class="choice-group" id="companion">
+        <button class="choice-btn" data-value="혼자">🙋 혼자</button>
+        <button class="choice-btn" data-value="커플">💑 커플</button>
+        <button class="choice-btn" data-value="부모님과 함께">👨‍👩‍👧 부모님과</button>
+        <button class="choice-btn" data-value="아이 동반 가족">👨‍👩‍👧‍👦 아이 동반</button>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">🎨 여행 스타일</label>
+      <div class="choice-group" id="style">
+        <button class="choice-btn" data-value="관광명소 정복형">🗺 명소 정복</button>
+        <button class="choice-btn" data-value="현지인 맛집 탐방형">🍜 맛집 탐방</button>
+        <button class="choice-btn" data-value="여유로운 힐링형">🌿 힐링</button>
+        <button class="choice-btn" data-value="인스타 감성형">📸 인스타 감성</button>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">💰 예산</label>
+      <div class="choice-group" id="budget">
+        <button class="choice-btn" data-value="저렴하게">🪙 저렴하게</button>
+        <button class="choice-btn" data-value="적당하게">💳 적당하게</button>
+        <button class="choice-btn" data-value="럭셔리하게">💎 럭셔리하게</button>
+      </div>
+    </div>
+    <div class="error-msg" id="errorMsg"></div>
+    <button class="submit-btn" onclick="generatePlan()">✦ 여행 일정 생성하기 ✦</button>
+  </div>
+
+  <div class="loading" id="loading">
+    <span class="loading-icon">🌍</span>
+    <p>AI가 최적의 여행 일정을 만들고 있습니다</p>
+    <div class="loading-dots"><span></span><span></span><span></span></div>
+  </div>
+
+  <div class="result-card" id="resultCard">
+    <div class="result-header">
+      <div class="result-title" id="resultTitle">여행 일정</div>
+      <div class="result-tags" id="resultTags"></div>
+    </div>
+    <div class="result-content" id="resultContent"></div>
+    <button class="reset-btn" onclick="resetForm()">← 다시 만들기</button>
+  </div>
+
+  <div class="footer">Powered by Groq AI ✦ Made with Claude</div>
+</div>
+
+<script>
+var K = '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';
+
+document.querySelectorAll('.choice-group').forEach(function(group) {
+  group.querySelectorAll('.choice-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      group.querySelectorAll('.choice-btn').forEach(function(b) { b.classList.remove('selected'); });
+      btn.classList.add('selected');
+    });
+  });
+});
+
+function getSel(id) {
+  var btn = document.querySelector('#' + id + ' .choice-btn.selected');
+  return btn ? btn.dataset.value : null;
+}
+
+function showError(msg) {
+  var el = document.getElementById('errorMsg');
+  el.textContent = '⚠ ' + msg;
+  el.classList.add('show');
+}
+
+async function generatePlan() {
+  var dest = document.getElementById('destination').value.trim();
+  var comp = getSel('companion');
+  var sty = getSel('style');
+  var bud = getSel('budget');
+  document.getElementById('errorMsg').classList.remove('show');
+
+  if (!dest) { showError('여행지를 입력해주세요!'); return; }
+  if (!comp) { showError('동행인을 선택해주세요!'); return; }
+  if (!sty) { showError('여행 스타일을 선택해주세요!'); return; }
+  if (!bud) { showError('예산을 선택해주세요!'); return; }
+
+  document.getElementById('formCard').style.display = 'none';
+  document.getElementById('loading').classList.add('show');
+  document.getElementById('resultCard').classList.remove('show');
+
+  var prompt = '너는 15년 경력의 베테랑 여행 플래너야. 아래 조건으로 2박 3일 여행 일정을 만들어줘.\n\n- 여행지: ' + dest + '\n- 동행인: ' + comp + '\n- 여행 스타일: ' + sty + '\n- 예산: ' + bud + '\n\n조건:\n1. 이동 동선이 꼬이지 않도록 지역별로 묶어서 계획할 것\n2. 식당은 메뉴 특징을 함께 기재할 것\n3. 3시간마다 짧은 휴식을 포함할 것\n4. 동행인 맞춤 특별 팁을 포함할 것\n5. 날짜별로 시간대 - 장소 - 상세 설명 순으로 작성할 것\n6. 반드시 한국어로 작성할 것';
+
+  try {
+    var res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + K },
+      body: JSON.stringify({ model: 'llama-3.3-70b-versatile', messages: [{ role: 'user', content: prompt }], temperature: 0.7, max_tokens: 2000 })
+    });
+    var data = await res.json();
+    if (data.choices && data.choices[0]) {
+      var text = data.choices[0].message.content;
+      document.getElementById('loading').classList.remove('show');
+      document.getElementById('resultTitle').textContent = dest + ' 2박 3일';
+      document.getElementById('resultTags').innerHTML = '<span class="result-tag">' + comp + '</span><span class="result-tag">' + sty + '</span><span class="result-tag">' + bud + '</span>';
+      document.getElementById('resultContent').textContent = text;
+      document.getElementById('resultCard').classList.add('show');
+    } else { throw new Error('오류'); }
+  } catch(e) {
+    document.getElementById('loading').classList.remove('show');
+    document.getElementById('formCard').style.display = 'block';
+    showError('오류가 발생했습니다. 다시 시도해주세요.');
+  }
+}
+
+function resetForm() {
+  document.getElementById('resultCard').classList.remove('show');
+  document.getElementById('formCard').style.display = 'block';
+  document.getElementById('destination').value = '';
+  document.querySelectorAll('.choice-btn').forEach(function(b) { b.classList.remove('selected'); });
+  document.getElementById('errorMsg').classList.remove('show');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
