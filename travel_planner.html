@@ -7,32 +7,30 @@
 <title>AI 여행 플래너</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;700&family=DM+Serif+Display:ital@0;1&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-:root { --sand:#F5ECD7; --deep:#1A1209; --amber:#C17F24; --rust:#8B3A2A; --cream:#FAF5EC; --mist:#E8DFC8; }
+:root { --sand:#F5ECD7; --deep:#1A1209; --amber:#C17F24; --rust:#8B3A2A; --cream:#FAF5EC; --mist:#E8DFC8; --green:#2D6A4F; }
 * { margin:0; padding:0; box-sizing:border-box; }
 body { background:var(--cream); color:var(--deep); font-family:'Noto Sans KR',sans-serif; min-height:100vh; }
-.container { max-width:800px; margin:0 auto; padding:60px 24px; }
-.header { text-align:center; margin-bottom:56px; animation:fadeDown 0.8s ease both; }
-.header-badge { display:inline-block; font-size:11px; font-weight:500; letter-spacing:3px; color:var(--amber); border:1px solid var(--amber); padding:6px 16px; margin-bottom:24px; }
-.header h1 { font-family:'DM Serif Display',serif; font-size:clamp(36px,7vw,64px); line-height:1.1; color:var(--deep); margin-bottom:16px; }
+.container { max-width:860px; margin:0 auto; padding:60px 24px; }
+.header { text-align:center; margin-bottom:48px; animation:fadeDown 0.8s ease both; }
+.header-badge { display:inline-block; font-size:11px; font-weight:500; letter-spacing:3px; color:var(--amber); border:1px solid var(--amber); padding:6px 16px; margin-bottom:20px; }
+.header h1 { font-family:'DM Serif Display',serif; font-size:clamp(36px,7vw,64px); line-height:1.1; color:var(--deep); margin-bottom:12px; }
 .header h1 em { font-style:italic; color:var(--amber); }
-.header p { font-size:15px; color:#6B5E4A; font-weight:300; line-height:1.7; }
-.form-card { background:white; border:1px solid var(--mist); padding:48px; box-shadow:0 4px 40px rgba(26,18,9,0.06); animation:fadeUp 0.8s 0.2s ease both; }
-.form-group { margin-bottom:28px; }
-.form-label { display:block; font-size:11px; font-weight:500; letter-spacing:2px; color:var(--amber); margin-bottom:12px; }
-.form-input { width:100%; padding:14px 18px; border:1px solid var(--mist); background:var(--cream); font-family:'Noto Sans KR',sans-serif; font-size:15px; color:var(--deep); outline:none; transition:border-color 0.2s,box-shadow 0.2s; }
-.form-input:focus { border-color:var(--amber); box-shadow:0 0 0 3px rgba(193,127,36,0.1); }
-.number-input { display:flex; align-items:center; gap:12px; }
-.number-input input { width:80px; text-align:center; padding:14px; border:1px solid var(--mist); background:var(--cream); font-family:'Noto Sans KR',sans-serif; font-size:16px; font-weight:500; color:var(--deep); outline:none; }
-.number-btn { width:40px; height:40px; border:1px solid var(--mist); background:var(--cream); font-size:20px; cursor:pointer; transition:all 0.2s; color:var(--amber); display:flex; align-items:center; justify-content:center; }
+.header p { font-size:14px; color:#6B5E4A; font-weight:300; line-height:1.7; }
+.form-card { background:white; border:1px solid var(--mist); padding:40px; box-shadow:0 4px 40px rgba(26,18,9,0.06); }
+.form-group { margin-bottom:24px; }
+.form-label { display:block; font-size:11px; font-weight:500; letter-spacing:2px; color:var(--amber); margin-bottom:10px; }
+.form-input { width:100%; padding:13px 16px; border:1px solid var(--mist); background:var(--cream); font-family:'Noto Sans KR',sans-serif; font-size:15px; color:var(--deep); outline:none; transition:border-color 0.2s; }
+.form-input:focus { border-color:var(--amber); }
+.number-input { display:flex; align-items:center; gap:10px; }
+.number-input input { width:70px; text-align:center; padding:12px; border:1px solid var(--mist); background:var(--cream); font-size:16px; font-weight:500; color:var(--deep); outline:none; }
+.number-btn { width:38px; height:38px; border:1px solid var(--mist); background:var(--cream); font-size:18px; cursor:pointer; transition:all 0.2s; color:var(--amber); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
 .number-btn:hover { background:var(--amber); color:white; border-color:var(--amber); }
-.choice-group { display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:10px; }
-.choice-btn { padding:10px 14px; border:1px solid var(--mist); background:var(--cream); font-family:'Noto Sans KR',sans-serif; font-size:13px; color:#6B5E4A; cursor:pointer; transition:all 0.2s; text-align:center; }
+.choice-group { display:grid; grid-template-columns:repeat(auto-fill,minmax(130px,1fr)); gap:8px; }
+.choice-btn { padding:10px 12px; border:1px solid var(--mist); background:var(--cream); font-family:'Noto Sans KR',sans-serif; font-size:12px; color:#6B5E4A; cursor:pointer; transition:all 0.2s; text-align:center; line-height:1.4; }
 .choice-btn:hover { border-color:var(--amber); color:var(--amber); }
 .choice-btn.selected { background:var(--amber); border-color:var(--amber); color:white; font-weight:500; }
-.multi-choice .choice-btn.selected { background:var(--amber); border-color:var(--amber); color:white; }
-.section-divider { border:none; border-top:1px solid var(--mist); margin:32px 0; }
-.section-title { font-size:13px; font-weight:500; color:#6B5E4A; margin-bottom:16px; letter-spacing:1px; }
-.submit-btn { width:100%; padding:18px; background:var(--deep); color:var(--sand); border:none; font-family:'Noto Sans KR',sans-serif; font-size:14px; font-weight:500; letter-spacing:2px; cursor:pointer; transition:background 0.3s; margin-top:8px; }
+.divider { border:none; border-top:1px solid var(--mist); margin:28px 0; }
+.submit-btn { width:100%; padding:16px; background:var(--deep); color:var(--sand); border:none; font-family:'Noto Sans KR',sans-serif; font-size:14px; font-weight:500; letter-spacing:2px; cursor:pointer; transition:background 0.3s; margin-top:8px; }
 .submit-btn:hover { background:var(--amber); }
 .loading { display:none; text-align:center; padding:60px 0; }
 .loading.show { display:block; }
@@ -42,31 +40,65 @@ body { background:var(--cream); color:var(--deep); font-family:'Noto Sans KR',sa
 .loading-dots span { width:6px; height:6px; background:var(--amber); border-radius:50%; animation:bounce 1.2s infinite; }
 .loading-dots span:nth-child(2) { animation-delay:0.2s; }
 .loading-dots span:nth-child(3) { animation-delay:0.4s; }
-.result-card { display:none; background:white; border:1px solid var(--mist); padding:48px; box-shadow:0 4px 40px rgba(26,18,9,0.06); }
+.result-card { display:none; background:white; border:1px solid var(--mist); padding:40px; box-shadow:0 4px 40px rgba(26,18,9,0.06); }
 .result-card.show { display:block; animation:fadeUp 0.6s ease both; }
-.result-header { margin-bottom:24px; padding-bottom:24px; border-bottom:1px solid var(--mist); }
-.result-title { font-family:'DM Serif Display',serif; font-size:28px; color:var(--deep); margin-bottom:12px; }
+.result-header { margin-bottom:24px; padding-bottom:20px; border-bottom:2px solid var(--amber); }
+.result-title { font-family:'DM Serif Display',serif; font-size:26px; color:var(--deep); margin-bottom:10px; }
 .result-tags { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px; }
 .result-tag { font-size:11px; padding:4px 10px; background:var(--cream); border:1px solid var(--mist); color:#6B5E4A; }
-.result-actions { display:flex; gap:12px; flex-wrap:wrap; margin-top:16px; }
-.action-btn { padding:10px 20px; border:1px solid var(--deep); background:transparent; font-family:'Noto Sans KR',sans-serif; font-size:12px; letter-spacing:1px; color:var(--deep); cursor:pointer; transition:all 0.2s; display:flex; align-items:center; gap:6px; }
+.result-actions { display:flex; gap:10px; flex-wrap:wrap; }
+.action-btn { padding:10px 18px; border:1px solid var(--deep); background:transparent; font-family:'Noto Sans KR',sans-serif; font-size:12px; color:var(--deep); cursor:pointer; transition:all 0.2s; }
 .action-btn:hover { background:var(--deep); color:var(--sand); }
 .action-btn.primary { background:var(--amber); border-color:var(--amber); color:white; }
 .action-btn.primary:hover { background:var(--deep); border-color:var(--deep); }
-.result-content { font-size:14px; line-height:1.9; color:#3A2E20; white-space:pre-wrap; font-family:'Noto Serif KR',serif; font-weight:300; margin-top:24px; }
-.error-msg { display:none; background:#FFF5F5; border:1px solid #FFCDD2; padding:16px 20px; color:var(--rust); font-size:14px; margin-top:16px; }
+
+/* 일정 표 스타일 */
+.schedule-container { margin-top:24px; }
+.day-section { margin-bottom:32px; }
+.day-title { font-family:'DM Serif Display',serif; font-size:20px; color:var(--amber); margin-bottom:16px; padding-bottom:8px; border-bottom:1px solid var(--mist); display:flex; align-items:center; gap:10px; }
+.schedule-table { width:100%; border-collapse:collapse; font-size:13px; }
+.schedule-table th { background:var(--deep); color:var(--sand); padding:10px 14px; text-align:left; font-weight:500; font-size:11px; letter-spacing:1px; }
+.schedule-table td { padding:14px; border-bottom:1px solid var(--mist); vertical-align:top; line-height:1.6; }
+.schedule-table tr:nth-child(even) td { background:#FDFAF5; }
+.schedule-table tr:hover td { background:#FFF8EC; }
+.time-cell { white-space:nowrap; font-weight:500; color:var(--amber); width:80px; }
+.place-cell { font-weight:500; color:var(--deep); min-width:120px; }
+.info-badge { display:inline-block; font-size:10px; padding:2px 8px; border-radius:2px; margin:2px 2px 2px 0; }
+.badge-cost { background:#FFF3E0; color:#E65100; border:1px solid #FFB74D; }
+.badge-time { background:#E8F5E9; color:#2E7D32; border:1px solid #81C784; }
+.badge-book { background:#E3F2FD; color:#1565C0; border:1px solid #64B5F6; }
+.place-img { width:100%; max-width:200px; height:120px; object-fit:cover; border-radius:2px; margin-top:8px; display:block; }
+.img-loading { width:200px; height:120px; background:var(--mist); display:flex; align-items:center; justify-content:center; font-size:24px; margin-top:8px; }
+.tip-box { background:#FFFBF0; border-left:3px solid var(--amber); padding:10px 14px; margin:8px 0; font-size:12px; color:#6B5E4A; }
+.cost-summary { background:var(--deep); color:var(--sand); padding:20px 24px; margin-top:24px; }
+.cost-summary h3 { font-family:'DM Serif Display',serif; font-size:18px; margin-bottom:16px; color:var(--sand); }
+.cost-table { width:100%; border-collapse:collapse; }
+.cost-table td { padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.1); font-size:13px; }
+.cost-table td:last-child { text-align:right; font-weight:500; color:var(--sand); }
+.cost-total td { border-top:2px solid var(--amber); border-bottom:none; font-weight:700; font-size:15px; color:var(--amber); padding-top:12px; }
+.warning-box { background:#FFF5F5; border:1px solid #FFCDD2; padding:16px 20px; margin-top:20px; }
+.warning-box h4 { color:var(--rust); font-size:13px; font-weight:600; margin-bottom:8px; }
+.warning-box ul { padding-left:16px; font-size:12px; color:#6B5E4A; line-height:1.8; }
+.raw-content { font-size:13px; line-height:1.9; color:#3A2E20; white-space:pre-wrap; font-family:'Noto Serif KR',serif; font-weight:300; margin-top:20px; }
+.error-msg { display:none; background:#FFF5F5; border:1px solid #FFCDD2; padding:14px 18px; color:var(--rust); font-size:13px; margin-top:14px; }
 .error-msg.show { display:block; }
-.footer { text-align:center; margin-top:48px; font-size:12px; color:#A89880; }
+.footer { text-align:center; margin-top:40px; font-size:12px; color:#A89880; }
 @keyframes fadeDown { from{opacity:0;transform:translateY(-20px)} to{opacity:1;transform:translateY(0)} }
 @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
 @keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
 @keyframes bounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-8px)} }
 @media print {
-  .header, .result-actions, .footer { display:none; }
-  .result-card { box-shadow:none; border:none; padding:0; }
+  .header,.result-actions,.footer,.form-card,.loading { display:none !important; }
+  .result-card { box-shadow:none; border:none; padding:0; display:block !important; }
   body { background:white; }
 }
-@media(max-width:600px) { .form-card,.result-card{padding:28px 20px} .choice-group{grid-template-columns:1fr 1fr} }
+@media(max-width:600px) {
+  .form-card,.result-card { padding:24px 16px; }
+  .choice-group { grid-template-columns:1fr 1fr; }
+  .schedule-table { font-size:12px; }
+  .schedule-table th, .schedule-table td { padding:8px 10px; }
+  .place-img { max-width:100%; }
+}
 </style>
 </head>
 <body>
@@ -74,44 +106,39 @@ body { background:var(--cream); color:var(--deep); font-family:'Noto Sans KR',sa
   <div class="header">
     <div class="header-badge">✦ AI Travel Planner ✦</div>
     <h1>나만의 <em>여행</em><br>일정 만들기</h1>
-    <p>여행지와 취향을 입력하면 AI가 최적의 2박 3일 일정을 만들어드립니다</p>
+    <p>여행지와 취향을 입력하면 AI가 최적의 2박 3일 일정을 표로 만들어드립니다</p>
   </div>
 
   <div class="form-card" id="formCard">
-
-    <!-- 여행지 -->
     <div class="form-group">
       <label class="form-label">✈ 여행지</label>
       <input type="text" class="form-input" id="destination" placeholder="예: 일본 후쿠오카, 제주도, 파리..." />
     </div>
 
-    <!-- 인원수 -->
     <div class="form-group">
       <label class="form-label">👥 인원수</label>
       <div class="number-input">
         <button class="number-btn" onclick="changeNum(-1)">−</button>
-        <input type="number" id="people" value="2" min="1" max="20" readonly />
+        <input type="number" id="people" value="2" min="1" max="30" readonly />
         <button class="number-btn" onclick="changeNum(1)">+</button>
-        <span style="font-size:14px;color:#6B5E4A;">명</span>
+        <span style="font-size:14px;color:#6B5E4A;margin-left:4px;">명</span>
       </div>
     </div>
 
-    <!-- 동행인 -->
     <div class="form-group">
-      <label class="form-label">🤝 동행인 유형</label>
+      <label class="form-label">🤝 동행인 유형 <span style="font-size:10px;color:#A89880;">(복수 선택)</span></label>
       <div class="choice-group" id="companion">
         <button class="choice-btn" data-value="혼자">🙋 혼자</button>
         <button class="choice-btn" data-value="커플">💑 커플</button>
         <button class="choice-btn" data-value="부모님과 함께">👨‍👩‍👧 부모님과</button>
         <button class="choice-btn" data-value="아이 동반 가족">👨‍👩‍👧‍👦 아이 동반</button>
-        <button class="choice-btn" data-value="친구들과 단체">👫 친구 단체</button>
+        <button class="choice-btn" data-value="친구 단체">👫 친구 단체</button>
         <button class="choice-btn" data-value="직장 동료 단체">💼 직장 단체</button>
       </div>
     </div>
 
-    <!-- 여행 스타일 -->
     <div class="form-group">
-      <label class="form-label">🎨 여행 스타일</label>
+      <label class="form-label">🎨 여행 스타일 <span style="font-size:10px;color:#A89880;">(복수 선택)</span></label>
       <div class="choice-group" id="style">
         <button class="choice-btn" data-value="관광명소 정복형">🗺 명소 정복</button>
         <button class="choice-btn" data-value="현지인 맛집 탐방형">🍜 맛집 탐방</button>
@@ -120,10 +147,9 @@ body { background:var(--cream); color:var(--deep); font-family:'Noto Sans KR',sa
       </div>
     </div>
 
-    <!-- 음식 종류 -->
     <div class="form-group">
-      <label class="form-label">🍽 선호 음식 <span style="font-size:10px;color:#A89880;">(복수 선택 가능)</span></label>
-      <div class="choice-group multi-choice" id="food">
+      <label class="form-label">🍽 선호 음식 <span style="font-size:10px;color:#A89880;">(복수 선택)</span></label>
+      <div class="choice-group" id="food">
         <button class="choice-btn" data-value="해산물">🦞 해산물</button>
         <button class="choice-btn" data-value="고기">🥩 고기</button>
         <button class="choice-btn" data-value="현지 전통음식">🍱 현지 전통</button>
@@ -133,7 +159,6 @@ body { background:var(--cream); color:var(--deep); font-family:'Noto Sans KR',sa
       </div>
     </div>
 
-    <!-- 예산 -->
     <div class="form-group">
       <label class="form-label">💰 예산</label>
       <div class="choice-group" id="budget">
@@ -143,17 +168,16 @@ body { background:var(--cream); color:var(--deep); font-family:'Noto Sans KR',sa
       </div>
     </div>
 
-    <hr class="section-divider">
-    <div class="section-title">🔧 추가 옵션</div>
+    <hr class="divider">
 
-    <!-- 추가 옵션 -->
     <div class="form-group">
-      <div class="choice-group multi-choice" id="options">
+      <label class="form-label">🔧 추가 옵션 <span style="font-size:10px;color:#A89880;">(복수 선택)</span></label>
+      <div class="choice-group" id="options">
         <button class="choice-btn" data-value="비 오는 날 실내 대안 일정 포함">🌧 우천 대안</button>
         <button class="choice-btn" data-value="노약자를 위한 충분한 휴식 포함">🪑 여유 일정</button>
         <button class="choice-btn" data-value="아이 친화적 장소 위주">🧒 아이 친화</button>
         <button class="choice-btn" data-value="여행지 주의사항 및 안전정보 포함">⚠️ 주의사항</button>
-        <button class="choice-btn" data-value="경비 상세 내역 자동 계산">💹 경비 계산</button>
+        <button class="choice-btn" data-value="전체 경비 상세 내역 계산">💹 경비 계산</button>
       </div>
     </div>
 
@@ -172,12 +196,12 @@ body { background:var(--cream); color:var(--deep); font-family:'Noto Sans KR',sa
       <div class="result-title" id="resultTitle">여행 일정</div>
       <div class="result-tags" id="resultTags"></div>
       <div class="result-actions">
-        <button class="action-btn primary" onclick="printPDF()">📄 PDF 저장</button>
+        <button class="action-btn primary" onclick="window.print()">📄 PDF 저장</button>
         <button class="action-btn" onclick="copyResult()">📋 텍스트 복사</button>
         <button class="action-btn" onclick="resetForm()">← 다시 만들기</button>
       </div>
     </div>
-    <div class="result-content" id="resultContent"></div>
+    <div id="scheduleOutput"></div>
   </div>
 
   <div class="footer">Powered by Groq AI ✦ Made with Claude</div>
@@ -185,45 +209,38 @@ body { background:var(--cream); color:var(--deep); font-family:'Noto Sans KR',sa
 
 <script>
 var K = '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';
+var lastRawText = '';
 
-// 인원수 조절
-function changeNum(delta) {
+function changeNum(d) {
   var el = document.getElementById('people');
-  var v = parseInt(el.value) + delta;
-  if (v < 1) v = 1;
-  if (v > 20) v = 20;
+  var v = parseInt(el.value) + d;
+  if(v<1) v=1; if(v>30) v=30;
   el.value = v;
 }
 
-// 단일 선택
-document.querySelectorAll('#companion, #style, #budget').forEach(function(group) {
+// 모든 그룹 복수 선택
+document.querySelectorAll('.choice-group').forEach(function(group) {
   group.querySelectorAll('.choice-btn').forEach(function(btn) {
     btn.addEventListener('click', function() {
-      group.querySelectorAll('.choice-btn').forEach(function(b) { b.classList.remove('selected'); });
-      btn.classList.add('selected');
-    });
-  });
-});
-
-// 복수 선택 (음식, 옵션)
-document.querySelectorAll('#food, #options').forEach(function(group) {
-  group.querySelectorAll('.choice-btn').forEach(function(btn) {
-    btn.addEventListener('click', function() {
+      var groupId = group.id;
+      // budget만 단일 선택
+      if(groupId === 'budget') {
+        group.querySelectorAll('.choice-btn').forEach(function(b) { b.classList.remove('selected'); });
+      }
       btn.classList.toggle('selected');
     });
   });
 });
 
-function getSel(id) {
-  var btn = document.querySelector('#' + id + ' .choice-btn.selected');
-  return btn ? btn.dataset.value : null;
+function getMultiSel(id) {
+  var vals = [];
+  document.querySelectorAll('#'+id+' .choice-btn.selected').forEach(function(b){ vals.push(b.dataset.value); });
+  return vals.join(', ');
 }
 
-function getMultiSel(id) {
-  var btns = document.querySelectorAll('#' + id + ' .choice-btn.selected');
-  var vals = [];
-  btns.forEach(function(b) { vals.push(b.dataset.value); });
-  return vals.join(', ');
+function getSel(id) {
+  var b = document.querySelector('#'+id+' .choice-btn.selected');
+  return b ? b.dataset.value : null;
 }
 
 function showError(msg) {
@@ -232,20 +249,130 @@ function showError(msg) {
   el.classList.add('show');
 }
 
+// 이미지 검색 (Unsplash)
+function getPlaceImage(placeName, dest) {
+  var query = encodeURIComponent(dest + ' ' + placeName + ' travel');
+  return 'https://source.unsplash.com/400x200/?' + query;
+}
+
+// 일정 파싱 및 표 렌더링
+function renderSchedule(text, dest, people, opts) {
+  lastRawText = text;
+  var container = document.getElementById('scheduleOutput');
+  
+  // 날짜별 분리
+  var days = text.split(/(?=\*?\*?[■□▶]?\s*\d일차|\*?\*?Day\s*\d|\*?\*?1일차|\*?\*?2일차|\*?\*?3일차)/i);
+  
+  var html = '<div class="schedule-container">';
+  
+  // 날짜 파싱
+  var dayEmojis = ['🌅', '☀️', '🌇'];
+  var dayNames = ['1일차', '2일차', '3일차'];
+  var dayCount = 0;
+  
+  days.forEach(function(dayText) {
+    if(!dayText.trim() || dayText.length < 30) return;
+    
+    var emoji = dayEmojis[dayCount] || '📅';
+    var dayName = dayNames[dayCount] || (dayCount+1)+'일차';
+    dayCount++;
+    
+    html += '<div class="day-section">';
+    html += '<div class="day-title">' + emoji + ' ' + dayName + '</div>';
+    html += '<table class="schedule-table">';
+    html += '<thead><tr>';
+    html += '<th>시간</th><th>장소</th><th>상세 정보</th><th>사진</th>';
+    html += '</tr></thead><tbody>';
+    
+    // 각 항목 파싱 (시간대 기준)
+    var lines = dayText.split('\n');
+    var items = [];
+    var current = null;
+    
+    lines.forEach(function(line) {
+      var timeMatch = line.match(/(\d{1,2}:\d{2})\s*[-–]\s*(.+)/);
+      if(timeMatch) {
+        if(current) items.push(current);
+        current = { time: timeMatch[1], rest: timeMatch[2], details: [] };
+      } else if(current && line.trim()) {
+        current.details.push(line.trim());
+      }
+    });
+    if(current) items.push(current);
+    
+    if(items.length === 0) {
+      // 파싱 실패시 텍스트 그대로
+      html += '<tr><td colspan="4" style="padding:16px;"><div class="raw-content">' + dayText.replace(/</g,'&lt;') + '</div></td></tr>';
+    } else {
+      items.forEach(function(item) {
+        var placeName = item.rest.replace(/\*\*/g,'').trim();
+        var details = item.details.join('\n').replace(/\*\*/g,'<strong>').replace(/\n/g,'<br>');
+        
+        // 배지 추출
+        var costMatch = item.details.join(' ').match(/💰[^\n]*/);
+        var timeMatch2 = item.details.join(' ').match(/🕐[^\n]*/);
+        var bookMatch = item.details.join(' ').match(/📌[^\n]*/);
+        var menuMatch = item.details.join(' ').match(/🍽[^\n]*/);
+        var starMatch = item.details.join(' ').match(/⭐[^\n]*/);
+        
+        var badges = '';
+        if(costMatch) badges += '<span class="info-badge badge-cost">' + costMatch[0] + '</span><br>';
+        if(timeMatch2) badges += '<span class="info-badge badge-time">' + timeMatch2[0] + '</span><br>';
+        if(bookMatch) badges += '<span class="info-badge badge-book">' + bookMatch[0] + '</span><br>';
+        if(menuMatch) badges += '<div style="margin-top:6px;font-size:12px;color:#3A2E20;">' + menuMatch[0] + '</div>';
+        if(starMatch) badges += '<div class="tip-box">' + starMatch[0] + '</div>';
+        
+        // 이미지
+        var imgUrl = 'https://source.unsplash.com/400x200/?' + encodeURIComponent(dest + ' ' + placeName);
+        
+        html += '<tr>';
+        html += '<td class="time-cell">' + item.time + '</td>';
+        html += '<td class="place-cell">' + placeName + '</td>';
+        html += '<td>' + (badges || details.substring(0, 300)) + '</td>';
+        html += '<td><img class="place-img" src="' + imgUrl + '" alt="' + placeName + '" onerror="this.style.display=\'none\'" loading="lazy"></td>';
+        html += '</tr>';
+      });
+    }
+    
+    html += '</tbody></table></div>';
+  });
+
+  // 경비 계산 섹션
+  if(opts && opts.includes('경비')) {
+    var costMatch = text.match(/전체\s*예상\s*경비[\s\S]*?(?=여행지\s*주의|$)/i);
+    if(costMatch) {
+      html += '<div class="cost-summary"><h3>💹 전체 예상 경비 (' + people + '명 기준)</h3>';
+      html += '<div class="raw-content" style="color:var(--sand);font-size:13px;">' + costMatch[0] + '</div></div>';
+    }
+  }
+
+  // 주의사항 섹션
+  if(opts && opts.includes('주의사항')) {
+    var warnMatch = text.match(/여행지\s*주의사항[\s\S]*/i);
+    if(warnMatch) {
+      html += '<div class="warning-box"><h4>⚠️ 여행지 주의사항 및 안전정보</h4>';
+      html += '<div style="font-size:13px;line-height:1.8;color:#3A2E20;">' + warnMatch[0].replace(/\n/g,'<br>') + '</div></div>';
+    }
+  }
+
+  html += '</div>';
+  container.innerHTML = html;
+}
+
 async function generatePlan() {
   var dest = document.getElementById('destination').value.trim();
   var people = document.getElementById('people').value;
-  var comp = getSel('companion');
-  var sty = getSel('style');
+  var comp = getMultiSel('companion');
+  var sty = getMultiSel('style');
   var bud = getSel('budget');
   var food = getMultiSel('food');
   var opts = getMultiSel('options');
 
   document.getElementById('errorMsg').classList.remove('show');
-  if (!dest) { showError('여행지를 입력해주세요!'); return; }
-  if (!comp) { showError('동행인 유형을 선택해주세요!'); return; }
-  if (!sty) { showError('여행 스타일을 선택해주세요!'); return; }
-  if (!bud) { showError('예산을 선택해주세요!'); return; }
+  if(!dest) { showError('여행지를 입력해주세요!'); return; }
+  if(!comp) { showError('동행인 유형을 선택해주세요!'); return; }
+  if(!sty) { showError('여행 스타일을 선택해주세요!'); return; }
+  if(!bud) { showError('예산을 선택해주세요!'); return; }
 
   document.getElementById('formCard').style.display = 'none';
   document.getElementById('loading').classList.add('show');
@@ -257,26 +384,22 @@ async function generatePlan() {
   prompt += '- 동행인: ' + comp + '\n';
   prompt += '- 여행 스타일: ' + sty + '\n';
   prompt += '- 예산: ' + bud + '\n';
-  if (food) prompt += '- 선호 음식: ' + food + '\n';
-  if (opts) prompt += '- 추가 요청: ' + opts + '\n';
+  if(food) prompt += '- 선호 음식: ' + food + '\n';
+  if(opts) prompt += '- 추가 요청: ' + opts + '\n';
   prompt += '\n기본 조건:\n';
-  prompt += '1. 이동 동선이 꼬이지 않도록 지역별로 묶어서 계획할 것\n';
-  prompt += '2. 3시간마다 짧은 휴식(카페/공원)을 포함할 것\n';
-  prompt += '3. 동행인 맞춤 특별 팁을 중간중간 포함할 것\n';
-  prompt += '4. 날짜별로 [시간대 - 장소 - 상세 설명] 순으로 작성할 것\n';
+  prompt += '1. 반드시 [1일차], [2일차], [3일차] 제목으로 구분할 것\n';
+  prompt += '2. 각 일정은 반드시 [HH:MM - 장소명] 형식으로 시작할 것 (예: 09:00 - 성산일출봉)\n';
+  prompt += '3. 이동 동선이 꼬이지 않도록 지역별로 묶어서 계획할 것\n';
+  prompt += '4. 동행인 맞춤 특별 팁을 포함할 것\n';
   prompt += '5. 반드시 한국어로 작성할 것\n\n';
-  prompt += '각 장소와 식당마다 아래 정보를 포함할 것:\n';
+  prompt += '각 장소마다 반드시 아래 정보를 포함할 것:\n';
   prompt += '💰 예상 비용 (1인 기준 금액)\n';
   prompt += '🍽 대표 메뉴 3가지와 각 가격\n';
   prompt += '🕐 운영 시간\n';
   prompt += '📌 예약 필요 여부 및 팁\n';
-  prompt += '⭐ 추천 이유 한 줄\n\n';
-  if (opts && opts.includes('경비')) {
-    prompt += '마지막에 [전체 예상 경비 요약]을 ' + people + '명 기준으로 항목별로 정리해줄 것 (숙박/식비/교통/입장료/합계)\n';
-  }
-  if (opts && opts.includes('주의사항')) {
-    prompt += '마지막에 [여행지 주의사항 및 안전정보]를 5가지 이상 정리해줄 것\n';
-  }
+  prompt += '⭐ 추천 이유 한 줄\n';
+  if(opts && opts.includes('경비')) prompt += '\n마지막에 [전체 예상 경비] 섹션을 ' + people + '명 기준으로 숙박/식비/교통/입장료/합계로 정리할 것\n';
+  if(opts && opts.includes('주의사항')) prompt += '\n마지막에 [여행지 주의사항] 섹션을 5가지 이상 정리할 것\n';
 
   try {
     var res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
@@ -290,7 +413,7 @@ async function generatePlan() {
       })
     });
     var data = await res.json();
-    if (data.choices && data.choices[0]) {
+    if(data.choices && data.choices[0]) {
       var text = data.choices[0].message.content;
       document.getElementById('loading').classList.remove('show');
       document.getElementById('resultTitle').textContent = dest + ' 2박 3일 (' + people + '명)';
@@ -298,8 +421,9 @@ async function generatePlan() {
         '<span class="result-tag">' + comp + '</span>' +
         '<span class="result-tag">' + sty + '</span>' +
         '<span class="result-tag">' + bud + '</span>' +
-        (food ? '<span class="result-tag">🍽 ' + food + '</span>' : '');
-      document.getElementById('resultContent').textContent = text;
+        (food ? '<span class="result-tag">🍽 ' + food + '</span>' : '') +
+        (opts ? '<span class="result-tag">⚙ ' + opts + '</span>' : '');
+      renderSchedule(text, dest, people, opts);
       document.getElementById('resultCard').classList.add('show');
     } else { throw new Error('오류'); }
   } catch(e) {
@@ -309,13 +433,8 @@ async function generatePlan() {
   }
 }
 
-function printPDF() {
-  window.print();
-}
-
 function copyResult() {
-  var text = document.getElementById('resultContent').textContent;
-  navigator.clipboard.writeText(text).then(function() {
+  navigator.clipboard.writeText(lastRawText).then(function() {
     alert('📋 일정이 클립보드에 복사되었습니다!');
   });
 }
@@ -325,9 +444,9 @@ function resetForm() {
   document.getElementById('formCard').style.display = 'block';
   document.getElementById('destination').value = '';
   document.getElementById('people').value = 2;
-  document.querySelectorAll('.choice-btn').forEach(function(b) { b.classList.remove('selected'); });
+  document.querySelectorAll('.choice-btn').forEach(function(b){ b.classList.remove('selected'); });
   document.getElementById('errorMsg').classList.remove('show');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  window.scrollTo({ top:0, behavior:'smooth' });
 }
 </script>
 </body>
