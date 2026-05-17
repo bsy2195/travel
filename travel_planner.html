@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -115,7 +116,7 @@ body { background:var(--cream); color:var(--deep); font-family:'Noto Sans KR',sa
 </div>
 
 <script>
-var K = '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';
+var K = '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';
 
 document.querySelectorAll('.choice-group').forEach(function(group) {
   group.querySelectorAll('.choice-btn').forEach(function(btn) {
@@ -153,7 +154,7 @@ async function generatePlan() {
   document.getElementById('loading').classList.add('show');
   document.getElementById('resultCard').classList.remove('show');
 
-  var prompt = '너는 15년 경력의 베테랑 여행 플래너야. 아래 조건으로 2박 3일 여행 일정을 만들어줘.\n\n- 여행지: ' + dest + '\n- 동행인: ' + comp + '\n- 여행 스타일: ' + sty + '\n- 예산: ' + bud + '\n\n조건:\n1. 이동 동선이 꼬이지 않도록 지역별로 묶어서 계획할 것\n2. 식당은 메뉴 특징을 함께 기재할 것\n3. 3시간마다 짧은 휴식을 포함할 것\n4. 동행인 맞춤 특별 팁을 포함할 것\n5. 날짜별로 시간대 - 장소 - 상세 설명 순으로 작성할 것\n6. 반드시 한국어로 작성할 것';
+  var prompt = '너는 15년 경력의 베테랑 여행 플래너야. 아래 조건으로 2박 3일 여행 일정을 만들어줘.\n\n- 여행지: ' + dest + '\n- 동행인: ' + comp + '\n- 여행 스타일: ' + sty + '\n- 예산: ' + bud + '\n\n조건:\n1. 이동 동선이 꼬이지 않도록 지역별로 묶어서 계획할 것\n2. 3시간마다 짧은 휴식(카페/공원)을 포함할 것\n3. 동행인 맞춤 특별 팁을 중간중간 포함할 것\n4. 날짜별로 시간대 - 장소 - 상세 설명 순으로 작성할 것\n5. 반드시 한국어로 작성할 것\n\n각 장소와 식당마다 반드시 아래 정보를 포함할 것:\n💰 예상 비용 (1인 기준 금액)\n🍽 대표 메뉴 3가지와 각 가격\n🕐 운영 시간\n📌 예약 필요 여부 및 팁\n⭐ 추천 이유 한 줄';
 
   try {
     var res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
